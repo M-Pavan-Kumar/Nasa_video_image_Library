@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NASA Video Gallery</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <h1>NASA Video and Image Gallery</h1>
+    <form id="media-search-form">
+      <label for="query-input" class="sr-only">Search NASA Media</label>
+      <input
+        type="text"
+        id="query-input"
+        name="query"
+        placeholder="Type your search here..."
+        required
+      />
+
+      <label for="media-select" class="sr-only">Select Media Type</label>
+      <select id="media-select" name="media">
+        <option value="video">Video</option>
+        <option value="image">Image</option>
+      </select>
+
+      <button type="submit">Search</button>
+    </form>
+    <div id="video-ress">
+      <p>Loading videos...</p>
+    </div>
+    <!-- <button id="load-more">Load More</button> -->
+    <script src="index.js"></script>
+  </body>
+</html>

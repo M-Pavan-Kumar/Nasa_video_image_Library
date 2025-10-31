@@ -1,0 +1,222 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #0d1117;
+  color: #ffffff;
+}
+
+#media-search-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0.05)
+  );
+  padding: 15px 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+#query-input {
+  padding: 8px 12px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+  width: 300px;
+}
+#query-input:focus {
+  outline: none;
+  border-color: #fff;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+#media-select {
+  padding: 8px 12px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  color: #003366;
+  cursor: pointer;
+  width: 120px;
+  transition: border-color 0.3s, background-color 0.3s;
+}
+#media-select:focus {
+  outline: none;
+  border-color: #fff;
+  /* background-color: rgba(255, 255, 255, 0.2); */
+}
+
+#media-search-form button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #00c6ff, #0072ce);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  width: 100px;
+  height: 40px;
+}
+
+#media-search-form button:hover {
+  background: linear-gradient(90deg, #0072ce, #00c6ff);
+  transform: translateY(-2px);
+}
+
+#media-search-form button:active {
+  transform: translateY(1px);
+}
+h1 {
+  text-align: center;
+  padding: 20px 0;
+  color: #58a6ff;
+}
+
+#video-ress {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-content: center;
+  padding: 20px;
+  min-height: 70vh;
+}
+
+.media-container {
+  background: linear-gradient(145deg, #1e2733, #0f1520);
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.media-container:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 8px rgba(0, 209, 255, 0.5);
+}
+
+.media-container h2 {
+  font-size: 18px;
+  color: #00d1ff;
+  margin: 10px 0;
+  text-align: center;
+  min-height: 48px;
+}
+
+.media-container video,
+.media-container img {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  display: block;
+  object-fit: cover;
+}
+
+#load-more {
+  display: block;
+  margin: 20px auto 40px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#load-more:hover {
+  background-color: #0056b3;
+}
+
+.loading-container {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1023px) {
+  #video-ress {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 15px;
+  }
+
+  #query-input {
+    width: 40%;
+  }
+  #media-select {
+    width: 15%;
+  }
+  #media-search-form button {
+    width: 15%;
+  }
+}
+
+@media (max-width: 640px) {
+  h1 {
+    padding: 15px 10px;
+    font-size: 24px;
+  }
+
+  #media-search-form {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  #query-input,
+  #media-select,
+  #media-search-form button {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  #video-ress {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 15px;
+  }
+
+  .media-container h2 {
+    font-size: 16px;
+    min-height: auto;
+  }
+  .media-container video,
+  .media-container img {
+    height: 150px;
+  }
+}
