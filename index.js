@@ -14,7 +14,7 @@ function loading() {
   videoress.innerHTML = `
         <div class="loading-container">
             <div class="spinner"></div>
-            <p style="color: gray;"> Loading ${media_select.value}... Please wait.</p>
+            <p style="color: gray;"> Loading ${media_select.value}s... Please wait.</p>
         </div>
     `;
   if (loadmorebutton) {
