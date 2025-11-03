@@ -10,8 +10,6 @@ let currentmediatype = "";
 let loadmorebutton = null;
 const resultsperpage = 12;
 
-
-
 function loading() {
   videoress.innerHTML = `
         <div class="loading-container">
@@ -60,7 +58,7 @@ async function sendRequest(query, media_type, isnewsearch = true) {
     const mediaItems = data.collection.items;
     // videoress.innerHTML = "";
     if (isnewsearch && mediaItems && mediaItems.length > 0) {
-        videoress.innerHTML = ""; 
+      videoress.innerHTML = "";
     }
     if (isnewsearch && (!mediaItems || mediaItems.length === 0)) {
       videoress.innerHTML = `<p>No results found for your query.</p>`;
@@ -78,8 +76,10 @@ async function sendRequest(query, media_type, isnewsearch = true) {
           const itemurl = item.href;
           const title = item.data[0].title;
           const type = item.data[0].media_type;
+          const thumbnail_url = item.links?.[0]?.href || null;
+          // console.log(item.links)
           if (type === media_type) {
-            return fetchFunction(itemurl, title);
+            return fetchFunction(itemurl, title, thumbnail_url);
           }
           return null;
         })
@@ -135,26 +135,53 @@ function handleLoadMore() {
 }
 sendRequest(queryinput.value || "stars", media_select.value || "video");
 
-function createVideoContainer(videourl, title) {
+function createVideoContainer(videourl, title, thumbnail_url) {
   const videocontainer = document.createElement("div");
   videocontainer.classList.add("media-container");
   const titletext = document.createElement("h2");
   titletext.textContent = title;
+
+  const thumbnailImage = document.createElement("img");
+  thumbnailImage.src = thumbnail_url || "placeholder.jpg";
+  thumbnailImage.alt = title;
+  thumbnailImage.classList.add("video-thumbnail");
+
   const video = document.createElement("video");
   video.setAttribute("controls", "");
+  // video.setAttribute("autoplay", "");
   video.setAttribute("preload", "metadata");
   video.setAttribute("playsinline", "");
   video.setAttribute("loading", "lazy");
+  video.setAttribute("width", "100%");
   const source = document.createElement("source");
   source.src = videourl;
   source.type = "video/mp4";
   video.appendChild(source);
+  const showVideo = () => {
+    if (videocontainer.contains(thumbnailImage)) {
+      videocontainer.replaceChild(video, thumbnailImage);
+      video.play().catch((e) => console.log("Autoplay Prevented : ", e));
+    }
+  };
+
+  const showThumbnail=()=>{
+    if (videocontainer.contains(video)){
+      video.pause();
+      // video.currentTime=0; 
+      videocontainer.replaceChild(thumbnailImage,video)
+    }
+  }
+
+  thumbnailImage.addEventListener("mouseenter",showVideo);
+  thumbnailImage.addEventListener("click",showVideo);
+  videocontainer.addEventListener("mouseenter",showVideo)
+  videocontainer.addEventListener("mouseleave",showThumbnail)
   videocontainer.appendChild(titletext);
-  videocontainer.appendChild(video);
+  videocontainer.appendChild(thumbnailImage);
   videoress.appendChild(videocontainer);
 }
 
-async function fetchVideoUrls(videourl, title) {
+async function fetchVideoUrls(videourl, title, thumbnail_url) {
   try {
     const res = await fetch(videourl);
     if (!res.ok) {
@@ -168,7 +195,7 @@ async function fetchVideoUrls(videourl, title) {
       links.find((link) => link.endsWith(".mp4"));
     if (videolink) {
       //   console.log(videolink);
-      createVideoContainer(videolink, title);
+      createVideoContainer(videolink, title, thumbnail_url);
     } else {
       console.log(`No video urls found`);
       console.log(`No high-quality MP4 link found for: ${title}`);
@@ -235,5 +262,3 @@ form.addEventListener("submit", (e) => {
 
   sendRequest(query, media_select.value, true);
 });
-
-
